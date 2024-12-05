@@ -1,0 +1,179 @@
+/* Conteneur principal pour les tableaux */
+.table-container, .batiment-details {
+  direction: rtl; /* Pour l'affichage de droite à gauche */
+  text-align: right;
+  font-family: 'Arial', sans-serif;
+  margin: 20px 0;
+  overflow-x: auto; /* Ajoute une barre de défilement horizontale */
+}
+
+/* Styles généraux pour les tableaux */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: auto; /* Autorise les colonnes à ajuster leur largeur en fonction du contenu */
+}
+
+/* Styles pour les cellules de tableau */
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  font-size: 13px; /* Réduit la taille de la police pour un affichage plus compact */
+  text-align: right;
+}
+
+/* Largeur minimale pour les cellules avec texte important */
+th, td:not(.short-column) {
+  min-width: 120px; /* Augmente la largeur minimale pour éviter l'ellipsis fréquent */
+}
+
+/* Spécifique aux colonnes courtes */
+.short-column {
+  width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Styles pour les en-têtes */
+th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+  color: #333;
+  text-align: right;
+}
+
+/* Style pour les liens des numéros d'annexe */
+.numero-lien {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.numero-lien:hover {
+  text-decoration: underline;
+}
+
+/* Conteneur pour les détails du bâtiment */
+.batiment-details {
+  margin-top: 20px;
+}
+
+/* Styles pour le titre de la section des détails du bâtiment */
+.batiment-details h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Pagination active */
+.pagination-controls button.active {
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+
+.no-data-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px; /* hauteur souhaitée pour centrer le message */
+  font-size: 1.5em;
+  color: #555; /* couleur du texte */
+  font-weight: bold;
+  text-align: center;
+  background-color: #f9f9f9; /* couleur de fond */
+  border: 1px solid #ddd; /* bordure légère */
+  border-radius: 8px; /* coins arrondis */
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ombre pour effet de profondeur */
+}
+/* General styling for the export button */
+button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff; /* Primary blue color */
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Arial', sans-serif; /* Ensures consistency with the table font */
+}
+
+/* Hover effect for the button */
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Arabic-specific styling for RTL and alignment */
+button {
+  direction: rtl;
+  text-align: center;
+}
+
+/* Styles for pagination controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Active page button styling */
+.pagination-controls button.active {
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Hover effect for pagination buttons */
+.pagination-controls button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Conteneur de l'image */
+.image-header-container {
+  margin-bottom: 20px; /* Espacement entre l'image et le contenu */
+  background-color: #f8f9fa; /* Couleur de fond claire (modifiable) */
+  padding: 15px; /* Ajoute de l'espace autour de l'image */
+  border-radius: 10px; /* Coins arrondis pour un effet esthétique */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre subtile */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style de l'image */
+.header-logo {
+  max-width: 100%;
+  width: 420px; /* Augmente la largeur de l'image */
+  height: auto;
+  border-radius: 5px; /* Coins légèrement arrondis */
+  transition: transform 0.3s ease; /* Animation au survol */
+}
+
+/* Effet de zoom au survol */
+.header-logo:hover {
+  transform: scale(1.05); /* Agrandit légèrement l'image au survol */
+}
+

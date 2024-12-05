@@ -1,0 +1,310 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <!-- En-tête de la modal -->
+    <div class="modal-header">
+      <h5 class="modal-title text-center w-100">تعديل المعلومات</h5>
+      <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+    </div>
+
+    <!-- Corps de la modal -->
+    <div class="modal-body">
+      <form [formGroup]="batimentForm" (ngSubmit)="onSubmitBatiment()">
+        <!-- Section des informations du bâtiment -->
+        <div class="mb-4 section-batiment">
+          <h2 class="text-primary">معلومات المبنى</h2>
+          <div class="form-group mb-3">
+            <label>عنوان البناية</label>
+            <input type="text" class="form-control" formControlName="adresse" />
+          </div>
+          <div class="form-group mb-3">
+            <label>المساحة</label>
+            <input type="number" class="form-control" formControlName="surface" />
+          </div>
+          <div class="form-group mb-3">
+            <label>عدد الطوابق</label>
+            <input type="text" class="form-control" formControlName="nbetage" />
+          </div>
+          <div class="form-group mb-3">
+            <label>الإسم العائلي والشخصي لمالك العقار</label>
+            <input type="text" class="form-control" formControlName="nomPrenomProprietaire" />
+          </div>
+          <div class="form-group mb-3">
+            <label>عدد الأسر القاطنة</label>
+            <input type="number" class="form-control" formControlName="nbFamilleResident" />
+          </div>
+          <div class="form-group mb-3">
+            <label>الاسم العائلي والشخصي للقاطنين</label>
+            <input type="text" class="form-control" formControlName="nomPrenomResident" />
+          </div>
+          <div class="form-group mb-3">
+            <label>وضعية رب الأسرة</label>
+            <select class="form-control" formControlName="situationChefFamille">
+              <option value="مالك">مالك</option>
+              <option value="مكتري">مكتري</option>
+              <option value="اخر">اخر</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>عدد المحلات التجارية</label>
+            <input type="number" class="form-control" formControlName="nbMagasin" />
+          </div>
+          <div class="form-group mb-3">
+            <label>الاسم العائلي والشخصي لمستغلي المحلات التجارية</label>
+            <input type="text" class="form-control" formControlName="nomPrenomExploitantMagasin" />
+          </div>
+          <div class="form-group mb-3">
+            <label>وضعية مستغلي المحلات التجارية</label>
+            <select class="form-control" formControlName="situationExploitant">
+              <option value="مالك">مالك</option>
+              <option value="مكتري">مكتري</option>
+              <option value="اخر">اخر</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>تحميل ملف البناية</label>
+            <input type="file" class="form-control" (change)="onFileChangeBatiment($event)" />
+          </div>
+          <button type="submit" class="btn btn-success w-100">تحديث المبنى</button>
+        </div>
+      </form>
+
+      <form [formGroup]="appercuRapportForm" (ngSubmit)="onSubmitAppercu()">
+        <!-- Section des informations AppercuRapport -->
+        <div class="mb-4">
+          <h2 class="text-primary">محضر معاينة</h2>
+          <div class="form-group mb-3">
+            <label>	عدد</label>
+            <input type="number" class="form-control" formControlName="nbRecommandation" />
+          </div>
+          <div class="form-group mb-3">
+            <label>تاريخ</label>
+            <input type="date" class="form-control" formControlName="dateInspection" />
+          </div>
+          <div class="form-group mb-3">
+            <label>التوصيات</label>
+            <input type="text" class="form-control" formControlName="recommandation" />
+          </div>
+          <div class="form-group mb-3">
+            <label>عدد الإشعارات</label>
+            <input type="number" class="form-control" formControlName="nbNotificationRapportInspection" />
+          </div>
+          <div class="form-group mb-3">
+            <label>تاريخ الإشعار</label>
+            <input type="date" class="form-control" formControlName="dateNotification" />
+          </div>
+          <div class="form-group mb-3">
+            <label>تحميل ملف المعاينة</label>
+            <input type="file" class="form-control" (change)="onFileChangeAppercu($event)" />
+          </div>
+          <button type="submit" class="btn btn-success w-100"> تحديث محضر معاينة</button>
+        </div>
+      </form>
+
+      <form [formGroup]="expertiseForm" (ngSubmit)="onSubmitExpertise()">
+        <!-- Section pour les informations sur ExpertiseTechnique -->
+        <div class="mb-4">
+          <h2 class="text-primary">الخبرة التقنية</h2>
+          <div class="form-group mb-3">
+            <label>	مكتب الدراسات</label>
+            <input type="text" class="form-control" formControlName="bureauEtude" />
+          </div>
+          <div class="form-group mb-3">
+            <label>	التاريخ</label>
+            <input type="date" class="form-control" formControlName="date" />
+          </div>
+          <div class="form-group mb-3">
+            <label>التوصيات</label>
+            <select class="form-control" formControlName="recommandationExpertise">
+              <option value="الهدم الكلي">الهدم الكلي</option>
+              <option value="الهدم الجزئي">الهدم الجزئي</option>
+              <option value="التدعيم و الاصلاح">التدعيم و الاصلاح</option>
+              <option value="الترميم">الترميم</option>
+              <option value="بناية سليمة">بناية سليمة</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>تحميل ملف الخبرة</label>
+            <input type="file" class="form-control" (change)="onFileChangeExpertise($event)" />
+          </div>
+          <button type="submit" class="btn btn-success w-100"> تحديث الخبرة التقنية</button>
+        </div>
+      </form>
+
+       <!-- Section pour les informations sur DecisionCollective -->
+      <form [formGroup]="decisionForm" (ngSubmit)="onSubmitDecision()">
+        <div class="mb-4">
+          <h2 class="text-primary">القرار الجماعي</h2>
+          <div class="form-group mb-3">
+            <label>	عدد</label>
+            <input type="number" class="form-control" formControlName="nbDec" />
+          </div>
+          <div class="form-group mb-3">
+            <label>التاريخ</label>
+            <input type="date" class="form-control" formControlName="dateDec" />
+          </div>
+          <div class="form-group mb-3">
+            <label>التوصيات</label>
+            <select class="form-control" formControlName="recommandationDecision">
+              <option value="الهدم الكلي">الهدم الكلي</option>
+              <option value="الهدم الجزئي">الهدم الجزئي</option>
+              <option value="التدعيم و الاصلاح">التدعيم و الاصلاح</option>
+              <option value="الترميم">الترميم</option>
+              <option value="الافراغ الفوري">الافراغ الفوري</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>تحميل ملف القرار</label>
+            <input type="file" class="form-control" (change)="onFileChangeDecision($event)" />
+          </div>
+          <button type="submit" class="btn btn-success w-100">تحديث القرار الجماعي</button>
+        </div>
+      </form>
+         <!-- Section pour les informations sur CommuniquerDecision -->
+        <form [formGroup]="communiquerForm" (ngSubmit)="onSubmitCommuniquerDecision()">
+          <h2 class="text-primary">إبلاغ القرار الجماعي</h2>
+          <div class="form-group mb-3">
+            <label>	عدد</label>
+            <input type="number" class="form-control" formControlName="nbDec" />
+          </div>
+          <div class="form-group mb-3">
+            <label>	التاريخ</label>
+            <input type="date" class="form-control" formControlName="dateDec" />
+          </div>
+          <button type="submit" class="btn btn-primary w-100"> تحديث إبلاغ القرار الجماعي</button>     
+        </form>
+
+          <!-- Formulaire pour Etat Avancement -->
+          <form [formGroup]="etatAvancementForm" (ngSubmit)="onSubmitEtatAvancement()">
+            <h2 class="text-primary">مآل تنفيذ القرار الجماعي</h2>
+            <div class="form-group mb-3">
+              <label>عدد المراسلات</label>
+              <input type="number" class="form-control" formControlName="nbCorrespondanceAL" />
+            </div>
+            <div class="form-group mb-3">
+              <label>تاريخ المراسلات</label>
+              <input type="date" class="form-control" formControlName="dateCorrespondanceAL" />
+            </div>
+            <div class="form-group mb-3">
+              <label>عدد الردود</label>
+              <input type="number" class="form-control" formControlName="nbReponseAL" />
+            </div>
+            <div class="form-group mb-3">
+              <label>تاريخ الردود</label>
+              <input type="date" class="form-control" formControlName="dateReponseAL" />
+            </div>
+            <button type="submit" class="btn btn-success w-100"> تحديث مآل تنفيذ القرار الجماعي</button>
+          </form>
+
+           <!-- Section pour les informations sur InformerAR -->
+        <form [formGroup]="informerARForm" (ngSubmit)="onSubmitInformerAR()">
+          <h2 class="text-primary">إخبار وكيل الملك</h2>
+          <div class="form-group mb-3">
+            <label>عدد</label>
+            <input type="number" class="form-control" formControlName="nbAR" />
+          </div>
+          <div class="form-group mb-3">
+            <label>التاريخ</label>
+            <input type="date" class="form-control" formControlName="dateAr" />
+          </div>
+          <button type="submit" class="btn btn-success w-100"> تحديث إخبار وكيل الملك</button>
+        </form>
+        
+          <!-- Section pour les informations sur Raison Inobservation -->
+          <form [formGroup]="raisonInobservationForm" (ngSubmit)="onSubmitRaisonInobservation()">
+            <h2 class="text-primary">أسباب عدم الإمتثال</h2>
+            <div class="form-group mb-3">
+              <label>الأسباب</label>
+              <input type="text" class="form-control" formControlName="nomRai" />
+            </div>
+            <button type="submit" class="btn btn-success w-100"> تحديث أسباب عدم الإمتثال</button>
+          </form>
+          
+          
+        <!-- Section pour les informations sur Relogement -->
+        <form [formGroup]="relogementForm" (ngSubmit)="onSubmitRelogement()">
+          <h2 class="text-primary">إعادة الإسكان</h2>
+          <div class="form-group mb-3">
+            <label>عدد الأسر التي تم إفراغها</label>
+            <input type="number" class="form-control" formControlName="nbFamilleExplusees" />
+          </div>
+          <div class="form-group mb-3">
+            <label>عدد الأسر في انتظار الاستفادة</label>
+            <input type="number" class="form-control" formControlName="nbFamillePrestations" />
+          </div>
+          <div class="form-group mb-3">
+            <label>الاسم العائلي والشخصي للأسر في انتظار الاستفادة</label>
+            <input type="text" class="form-control" formControlName="nomPrenomPrestations" />
+          </div> 
+          <div class="form-group mb-3">
+            <label>عدد الأسر المستفيدة</label>
+            <input type="number" class="form-control" formControlName="nbFamilleBeneficiaire" />
+          </div>        
+          <div class="form-group mb-3">
+            <label>الاسم العائلي والشخصي للمستفيد</label>
+            <input type="text" class="form-control" formControlName="nomPrenomBeneficiaire" />
+          </div>      
+          <div class="form-group mb-3">
+            <label>تاريخ إجراء القرعة</label>
+            <input type="date" class="form-control" formControlName="dateTirageSort" />
+          </div> 
+          <div class="form-group mb-3">
+            <label>مكان الاستفادة</label>
+            <input type="text" class="form-control" formControlName="lieuPrestation" />
+          </div>
+          <div class="form-group mb-3">
+            <label>إعادة التوطين</label>
+            <input type="text" class="form-control" formControlName="relocalisation" />
+          </div>
+          <div class="form-group mb-3">
+            <label>الشركة المشرفة</label>
+            <select class="form-control" formControlName="societeSurveillance">
+              <option value=" الدارالبيضاء"> الدارالبيضاء</option>
+              <option value="العمران">العمران</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>تحميل إجراء القرعة</label>
+            <input type="file" class="form-control" (change)="onFileChangeRelogement($event)" />
+          </div>
+          <button type="submit" class="btn btn-primary w-100"> تحديث إعادة الإسكان</button>
+        </form>
+
+        <!-- Section pour les informations sur StatutActuel -->
+        <form [formGroup]="statutActuelForm" (ngSubmit)="onSubmitStatutActuel()">
+          <h2 class="text-primary">الوضعية الراهنة للبناية</h2>
+          <div class="form-group mb-3">
+            <label>فارغة</label>
+            <input type="text" class="form-control" formControlName="vide" />
+          </div>
+          <div class="form-group mb-3">
+            <label>معتمرة</label>
+            <input type="text" class="form-control" formControlName="vacant" />
+          </div>
+          <div class="form-group mb-3">
+            <label>	هدمت كليا</label>
+            <select class="form-control" formControlName="entierementDemoli">
+              <option value= "مالك"> مالك</option>
+              <option value="مكتري">مكتري</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>هدمت جزئيا</label>
+            <select class="form-control" formControlName="partiellementDemoli">
+              <option value= "مالك"> مالك</option>
+              <option value="مكتري">مكتري</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label>	تم تدعيمها</label>
+            <input type="text" class="form-control" formControlName="renforce" />
+          </div>
+          <div class="form-group mb-3">
+            <label>تم ترميمها</label>
+            <input type="text" class="form-control" formControlName="restaurer" />
+          </div>
+          <button type="submit" class="btn btn-success w-100"> تحديث الوضعية الراهنة للبناية</button>
+        </form>
+        
+    </div>
+  </div>
+</div>

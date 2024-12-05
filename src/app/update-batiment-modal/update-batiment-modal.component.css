@@ -1,0 +1,60 @@
+.modal-dialog {
+  max-width: 800px; /* Largeur maximale pour une meilleure lisibilité */
+  margin: 1.5rem auto; /* Centrer la modal */
+}
+
+.modal-content {
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre douce */
+  border: none; /* Enlever la bordure */
+}
+
+.modal-header {
+  background-color: #007bff; /* Couleur de l'en-tête */
+  color: white; /* Couleur du texte */
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-bottom: none;
+  border-top-left-radius: 10px; /* Arrondi en haut à gauche */
+  border-top-right-radius: 10px; /* Arrondi en haut à droite */
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  background-color: #f9f9f9; /* Couleur douce pour le fond */
+  max-height: calc(90vh - 140px); /* Ajustez en fonction de la taille du header/footer */
+  overflow-y: auto; /* Activer le défilement vertical */
+}
+
+.form-group {
+  margin-bottom: 1rem; /* Espace entre les champs */
+}
+
+label {
+  font-weight: 500;
+}
+
+input,
+select {
+  border-radius: 5px; /* Coins arrondis pour les champs */
+  border: 1px solid #ced4da;
+  padding: 0.375rem 0.75rem;
+}
+
+button[type="submit"] {
+  margin-top: 1rem;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: scale(1.02); /* Effet léger au survol */
+}
+

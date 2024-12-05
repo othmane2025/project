@@ -1,0 +1,274 @@
+
+<div class="image-header-container">
+  <img src="assets/images/logo-prefecture.jpg" alt="Logo Préfecture" class="header-logo">
+</div>
+
+  <div class="container mt-4">
+  <!-- Titre et Bouton d'export -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-primary">إدارة المعلومات</h2>
+    <button class="btn btn-success" (click)="exportExcel()">تحميل الجدول</button>
+  </div>
+
+  <!-- Tableau principal -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>المقاطعة</th>
+          <th>الملحقة الادارية</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let group of groupedData">
+          <td>
+            <a href="javascript:void(0)" 
+   (click)="onArrondissementClick(convertToNomArrondissement(group.arrondissement))" 
+   class="text-decoration-none text-primary">
+  {{ group.arrondissement }}
+</a>
+
+          </td>
+          <td>
+            <div *ngFor="let annexe of group.annexes">
+              <a href="javascript:void(0)" 
+                 (click)="onNumeroClick(convertToNomAnnexe(annexe))" 
+                 class="text-decoration-none text-primary">
+                {{ annexe }}
+              </a>
+            </div> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+
+  <div class="search-container mb-3">
+    <select 
+      [(ngModel)]="recommandation" 
+      class="form-control mb-2"
+    >
+      <option value="" disabled selected>ابحث عن توصية خبرة تقنية ...</option>
+      <option value="الهدم الكلي">الهدم الكلي</option>
+      <option value="الهدم الجزئي">الهدم الجزئي</option>
+      <option value="التدعيم و الاصلاح">التدعيم و الاصلاح</option>
+      <option value="الترميم">الترميم</option>
+      <option value="بناية سليمة">بناية سليمة</option>
+    </select>
+    
+    <button (click)="searchExpertises()" class="btn btn-primary">بحث</button>
+    <button (click)="resetSearch()" class="btn btn-secondary ml-2">إعادة الضبط</button>
+  </div>
+
+  <div class="search-container mb-3">
+    <select 
+      [(ngModel)]="recommandationDecision" 
+      class="form-control mb-2"
+    >
+      <option value="" disabled selected>ابحث عن توصية قرار جماعي ...</option>
+      <option value="الهدم الكلي">الهدم الكلي</option>
+      <option value="الهدم الجزئي">الهدم الجزئي</option>
+      <option value="التدعيم و الاصلاح">التدعيم و الاصلاح</option>
+      <option value="الترميم">الترميم</option>
+      <option value="الافراغ الفوري">الافراغ الفوري</option>
+    </select>
+    
+    <button (click)="searchDecisionCollectives()" class="btn btn-primary">بحث</button>
+    <button (click)="resetDecisionSearch()" class="btn btn-secondary ml-2">إعادة الضبط</button>
+  </div>
+  
+  
+
+  <!-- Détails des bâtiments -->
+  <div *ngIf="paginatedBatiments.length > 0" class="mt-4">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-secondary">
+          <tr>
+            <th colspan="12" class="text-center">معلومات عن البناية</th>
+            <th colspan="6" class="text-center">محضر معاينة</th>
+            <th colspan="4" class="text-center">الخبرة التقنية</th>
+            <th colspan="4" class="text-center">القرار الجماعي</th>
+            <th colspan="2" class="text-center">إبلاغ القرار الجماعي</th>
+            <th colspan="4" class="text-center">مآل تنفيذ القرار الجماعي</th>
+            <th colspan="2" class="text-center">إخبار وكيل الملك</th>
+            <th class="text-center">أسباب عدم الإمتثال</th>
+            <th colspan="10" class="text-center">إعادة الإسكان</th>
+            <th colspan="6" class="text-center">الوضعية الراهنة للبناية</th>
+            <th colspan="1" class="text-center"></th>
+          </tr>
+          <tr>
+            <!-- Détails des bâtiments -->
+            <th>رقم</th>
+            <th>عنوان البناية</th>
+            <th>المساحة</th>
+            <th>عدد الطوابق</th>
+            <th>الإسم العائلي والشخصي لمالك العقار</th>
+            <th>عدد الأسر القاطنة</th>
+            <th>الاسم العائلي والشخصي للقاطنين</th>
+            <th>وضعية رب الأسرة</th>
+            <th>عدد المحلات التجارية</th>
+            <th>الاسم العائلي والشخصي لمستغلي المحلات التجارية</th>
+            <th>وضعية مستغلي المحلات التجارية</th>
+            <th>تحميل ملف البناية</th>
+            <!-- Données de l'inspection -->
+            <th>عدد</th>
+            <th>تاريخ</th>
+            <th>التوصيات</th>
+            <th>عدد الإشعارات</th>
+            <th>تاريخ الإشعار</th>
+            <th>تحميل ملف المعاينة</th>
+            <!-- Données de l'expertise -->
+            <th>مكتب الدراسات</th>
+            <th>التاريخ</th>
+            <th>التوصيات</th>
+            <th>تحميل ملف الخبرة</th>
+            <!-- Données de la décision collective -->
+            <th>عدد</th>
+            <th>التاريخ</th>
+            <th>التوصيات</th>
+            <th>تحميل ملف القرار</th>
+            <!-- Données d'information -->
+            <th>عدد</th>
+            <th>التاريخ</th>
+            <!-- Données d'EtatAvancement -->
+            <th>عدد المراسلات</th>
+            <th>تاريخ المراسلات</th>
+            <th>عدد الردود</th>
+            <th>تاريخ الردود</th>
+            <!-- Données d'InformerAR -->
+            <th>عدد</th>
+            <th>التاريخ</th>
+            <!-- Données des raisons -->
+            <th>الأسباب</th>
+            <!-- Données de relogement -->
+            <th>عدد الأسر التي تم إفراغها</th>
+            <th>عدد الأسر في انتظار الاستفادة</th>
+            <th>الاسم العائلي والشخصي للأسر في انتظار الاستفادة</th>
+            <th>عدد الأسر المستفيدة</th>
+            <th>الاسم العائلي والشخصي للمستفيد</th>
+            <th>تاريخ إجراء القرعة</th>
+            <th>مكان الاستفادة</th>
+            <th>إعادة التوطين</th>
+            <th>الشركة المشرفة</th>
+            <th>تحميل ملف إعادة الإسكان</th>
+            <!-- Données de la situation actuelle -->
+            <th>فارغة</th>
+            <th>معتمرة</th>
+            <th>هدمت كليا</th>
+            <th>هدمت جزئيا</th>
+            <th>تم تدعيمها</th>
+            <th>تم ترميمها</th>
+            <th>الإجراء</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let batiment of (isSearchActive ? filteredBatiments : (isDecisionSearchActive ? filteredDecisionBatiments : paginatedBatiments)); let i = index">
+
+            <td>{{ batiment.idBat }}</td>
+            <td>
+              <a [routerLink]="['/creer-rapport', batiment.idBat]" class="text-danger font-weight-bold">
+                {{ batiment.adresse }}
+              </a>
+            </td>
+            <td>{{ batiment.surface }}</td>
+            <td>{{ batiment.nbetage }}</td>
+            <td>{{ batiment.nomPrenomProprietaire }}</td>
+            <td>{{ batiment.nbFamilleResident }}</td>
+            <td>{{ batiment.nomPrenomResident }}</td>
+            <td>{{ getSituationChefFamilleLabel(batiment.situationChefFamille) }}</td>
+            <td>{{ batiment.nbMagasin }}</td>
+            <td>{{ batiment.nomPrenomExploitantMagasin }}</td>
+            <td>{{ getSituationExploitantLabel(batiment.situationExploitant) }}</td>
+            <td>
+              <button (click)="downloadFile(batiment.idBat)">تحميل الملف</button>
+            </td>
+            <td>{{ paginatedAppercuRapports[i]?.nbRecommandation || 'N/A' }}</td>
+            <td>{{ paginatedAppercuRapports[i]?.dateInspection | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ paginatedAppercuRapports[i]?.recommandation || 'N/A' }}</td>
+            <td>{{ paginatedAppercuRapports[i]?.nbNotificationRapportInspection || 'N/A' }}</td>
+            <td>{{ paginatedAppercuRapports[i]?.dateNotification | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>
+              <button (click)="downloadReportFile(batiment.idBat)">تحميل الملف</button>
+            </td>
+            <td>{{ selectedExpertiseTechniques[i]?.bureauEtude || 'N/A' }}</td>
+            <td>{{ selectedExpertiseTechniques[i]?.date | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ selectedExpertiseTechniques[i]?.recommandationExpertise || 'N/A' }}</td>
+            <td>
+              <button (click)="downloadFileExpertise(batiment.idBat)">تحميل الملف</button>
+            </td>
+            <td>{{ selectedDecisionCollectives[i]?.nbDec || 'N/A' }}</td>
+            <td>{{ selectedDecisionCollectives[i]?.dateDec | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ selectedDecisionCollectives[i]?.recommandationDecision || 'N/A' }}</td>
+            <td>
+              <button (click)="downloadFileDecision(batiment.idBat)">تحميل الملف</button>
+            </td>
+            <td>{{ selectedCommuniquerDecisions[i]?.nbDec || 'N/A' }}</td>
+            <td>{{ selectedCommuniquerDecisions[i]?.dateDec | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ selectedEtatAvancements[i]?.nbCorrespondanceAL || 'N/A' }}</td>
+            <td>{{ selectedEtatAvancements[i]?.dateCorrespondanceAL | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ selectedEtatAvancements[i]?.nbReponseAL || 'N/A' }}</td>
+            <td>{{ selectedEtatAvancements[i]?.dateReponseAL | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ selectedInformerAR[i]?.nbAR || 'N/A' }}</td>
+            <td>{{ selectedInformerAR[i]?.dateAr | date: 'yyyy-MM-dd' || 'N/A' }}</td>
+            <td>{{ selectedRaisons[i]?.nomRai || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'nbFamilleExplusees') || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'nbFamillePrestations') || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'nomPrenomPrestations') || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'nbFamilleBeneficiaire') || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'nomPrenomBeneficiaire') || 'N/A' }}</td>
+            <td>{{ formatDate(getRelogementData(i, 'dateTirageSort')) }}</td>
+            <td>{{ getRelogementData(i, 'lieuPrestation') || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'relocalisation') || 'N/A' }}</td>
+            <td>{{ getRelogementData(i, 'societeSurveillance') || 'N/A' }}</td>
+            <td>
+              <ng-container *ngIf="getRelogementData(i, 'fileRapportTirage'); else noFile">
+                <button (click)="downloadFileRelogement(batiment.idBat)">تحميل الملف</button>
+              </ng-container>
+              <ng-template #noFile>N/A</ng-template>
+            </td>
+            <td>{{ selectedStatutActuels[i]?.vide || 'N/A' }}</td>
+            <td>{{ selectedStatutActuels[i]?.vacant || 'N/A' }}</td>
+            <td>{{ selectedStatutActuels[i]?.entierementDemoli || 'N/A' }}</td>
+            <td>{{ selectedStatutActuels[i]?.partiellementDemoli || 'N/A' }}</td>
+            <td>{{ selectedStatutActuels[i]?.renforce || 'N/A' }}</td>
+            <td>{{ selectedStatutActuels[i]?.restaurer || 'N/A' }}</td>
+            <td>
+             
+            <button class="btn btn-danger btn-sm" (click)="deleteBatiment(batiment.idBat)">
+              <span class="material-icons">delete</span>
+            </button>
+            <button class="btn btn-warning btn-sm" (click)="openUpdateModal(batiment.idBat, batiment)">
+              <span class="material-icons">edit</span>
+            </button>
+            
+            
+            </td>
+          </tr>
+        </tbody>
+        
+      </table>
+    </div>
+  </div>
+
+  <!-- Message "aucune donnée disponible" -->
+  <div *ngIf="paginatedBatiments.length === 0" class="alert alert-warning text-center mt-4">
+    <p>لا توجد معلومات متاحة في الوقت الحالي.</p>
+  </div>
+
+  <!-- Pagination -->
+  <!-- Contrôles de pagination pour naviguer entre les pages -->
+<div class="pagination-controls">
+  <span *ngFor="let page of pageNumbers">
+    <button (click)="goToPage(page)" [class.active]="currentPage + 1 === page">
+      {{ page }}
+    </button>
+  </span>
+</div>
+
+  <!-- Lien vers une autre page -->
+  <div class="mt-3 text-center">
+    <a [routerLink]="['/autre-page']" class="btn btn-outline-primary">اضافة بناية</a>
+  </div>
+</div>

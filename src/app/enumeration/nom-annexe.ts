@@ -1,0 +1,14 @@
+export enum NomAnnexe {
+    ANNEXE_56 = 'ANNEXE_56',
+    ANNEXE_57 = 'ANNEXE_57',
+    ANNEXE_57Bis = 'ANNEXE_57Bis',
+    ANNEXE_58 = 'ANNEXE_58',
+    ANNEXE_58Bis = 'ANNEXE_58Bis',
+    ANNEXE_59 = 'ANNEXE_59',
+    ANNEXE_60 = 'ANNEXE_60',
+    ANNEXE_60Bis = 'ANNEXE_60Bis',
+    ANNEXE_61 = 'ANNEXE_61',
+    ANNEXE_62 = 'ANNEXE_62',
+    ANNEXE_SAB = 'ANNEXE_SAB',
+}
+

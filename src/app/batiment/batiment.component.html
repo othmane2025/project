@@ -1,0 +1,189 @@
+<div class="container mt-4">
+  <h2 class="text-primary">اختر المقاطعة</h2>
+  <div class="form-group">
+    <label for="arrondissementSelect">المقاطعة</label>
+    <select
+      id="arrondissementSelect"
+      class="form-control"
+      [(ngModel)]="selectedArrondissement"
+      (change)="onSelectArrondissement()"
+      required
+    >
+      <option *ngFor="let arrondissement of arrondissements" [ngValue]="arrondissement">
+        {{ arrondissement.nomArrondissement }}
+      </option>
+    </select>
+  </div>
+
+  <h2 class="text-primary mt-4">اختر الملحقة </h2>
+  <div class="form-group">
+    <label for="annexeSelect">الملحقة </label>
+    <select
+      id="annexeSelect"
+      class="form-control"
+      [(ngModel)]="selectedAnnexe"
+      (change)="onAnnexeSelection()"
+      required
+    >
+      <option *ngFor="let annexe of filteredAnnexes" [ngValue]="annexe">
+        {{ annexe.nom }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<!-- Formulaire pour ajouter un bâtiment après avoir sélectionné une annexe -->
+<div *ngIf="selectedAnnexe" class="container mt-4">
+  <h2 class="text-success"> إضافة مبنى للملحقة {{ selectedAnnexe.nom }}</h2>
+  <form (ngSubmit)="ajouterBatiment()" #batimentForm="ngForm" enctype="multipart/form-data">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="adresse">عنوان البناية</label>
+        <input
+          id="adresse"
+          [(ngModel)]="nouveauBatiment.adresse"
+          name="adresse"
+          class="form-control"
+          
+        />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="surface">المساحة</label>
+        <input
+          id="surface"
+          [(ngModel)]="nouveauBatiment.surface"
+          name="surface"
+          type="number"
+          class="form-control"
+         
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="nbetage">عدد الطوابق</label>
+        <input
+          id="nbetage"
+          [(ngModel)]="nouveauBatiment.nbetage"
+          name="nbetage"
+          class="form-control"
+       
+        />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="nomPrenomProprietaire">الإسم العائلي والشخصي لمالك العقار</label>
+        <input
+          id="nomPrenomProprietaire"
+          [(ngModel)]="nouveauBatiment.nomPrenomProprietaire"
+          name="nomPrenomProprietaire"
+          class="form-control"
+         
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="nbFamilleResident">عدد الأسر القاطنة</label>
+        <input
+          id="nbFamilleResident"
+          [(ngModel)]="nouveauBatiment.nbFamilleResident"
+          name="nbFamilleResident"
+          type="number"
+          class="form-control"
+       
+        />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="nomPrenomResident">لاسم العائلي والشخصي للقاطنين</label>
+        <input
+          id="nomPrenomResident"
+          [(ngModel)]="nouveauBatiment.nomPrenomResident"
+          name="nomPrenomResident"
+          class="form-control"
+    
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="situationChefFamille">وضعية رب الأسرة</label>
+        <select
+          id="situationChefFamille"
+          [(ngModel)]="nouveauBatiment.situationChefFamille"
+          name="situationChefFamille"
+          class="form-control"
+        >
+        <option value="مالك">مالك</option>
+        <option value="مكتري">مكتري</option>        
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="nbMagasin">عدد المحلات التجارية</label>
+        <input
+          id="nbMagasin"
+          [(ngModel)]="nouveauBatiment.nbMagasin"
+          name="nbMagasin"
+          type="number"
+          class="form-control"
+         
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="nomPrenomExploitantMagasin">لاسم العائلي والشخصي لمستغلي المحلات التجارية</label>
+        <input
+          id="nomPrenomExploitantMagasin"
+          [(ngModel)]="nouveauBatiment.nomPrenomExploitantMagasin"
+          name="nomPrenomExploitantMagasin"
+          class="form-control"
+        
+        />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="situationExploitant">وضعية مستغلي المحلات التجارية</label>
+        <select
+          id="situationExploitant"
+          [(ngModel)]="nouveauBatiment.situationExploitant"
+          name="situationExploitant"
+          class="form-control"
+        >
+        <option value="مالك">مالك</option>
+        <option value="مكتري">مكتري</option>
+      
+        
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image"> اضافة ملف</label>
+      <input type="file" id="image" (change)="onFileChange($event)" class="form-control-file" />
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success btn-block">إضافة مبنى</button>
+    </div>
+  </form>
+
+  <!-- Section des messages -->
+<div *ngIf="successMessage" class="alert alert-success mt-3">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  {{ errorMessage }}
+</div>
+
+  <div class="form-group">
+    <a [routerLink]="['/']" class="btn btn-secondary btn-block">العودة إلى صفحة الجدول</a>
+  </div>
+</div>

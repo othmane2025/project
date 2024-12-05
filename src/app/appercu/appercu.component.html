@@ -1,0 +1,557 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">ربط المعلومات المقدمة مع المبنى المقابل</h2>
+
+  <!-- Formulaire pour AppercuRapport -->
+  <div class="card shadow mb-5">
+      <div class="card-header bg-success text-white">
+          <h5 class="mb-0">إضافة تقرير معاينة جديد</h5>
+      </div>
+      <div class="card-body">
+          <form [formGroup]="appercuForm" (ngSubmit)="onSubmitAppercu()">
+              <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label for="adresse" class="form-label">عنوان المبنى</label>
+                    <ul class="list-group">
+                      <li *ngFor="let adresse of adresses" class="list-group-item">
+                        {{ adresse || 'Adresse non disponible' }}
+                      </li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label for="nbRecommandation" class="form-label">عدد</label>
+                      <input type="number" id="nbRecommandation" formControlName="nbRecommandation" class="form-control" >
+                  </div>
+                  <div class="col-md-6">
+                      <label for="dateInspection" class="form-label">تاريخ</label>
+                      <input type="date" id="dateInspection" formControlName="dateInspection" class="form-control" >
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label for="recommandation" class="form-label">	التوصيات</label>
+                      <input type="text" id="recommandation" formControlName="recommandation" class="form-control" >
+                  </div>
+                  <div class="col-md-6">
+                      <label for="nbNotificationRapportInspection" class="form-label">عدد الإشعارات</label>
+                      <input type="number" id="nbNotificationRapportInspection" formControlName="nbNotificationRapportInspection" class="form-control" >
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label for="dateNotification" class="form-label">تاريخ الإشعار</label>
+                      <input type="date" id="dateNotification" formControlName="dateNotification" class="form-control" >
+                  </div>
+                  <div class="col-md-6">
+                      <label for="filerapportInspection" class="form-label">تحميل ملف المعاينة</label>
+                      <input type="file" id="filerapportInspection" (change)="onFileSelected($event)" class="form-control" >
+                  </div>
+              </div>
+              <div class="d-grid gap-2">
+                  <button type="submit" class="card-header bg-success text-whites">إضافة</button>
+              </div>
+          </form>
+      </div>
+  </div>
+
+  <!-- Messages de succès et d'erreur pour AppercuRapport -->
+<div *ngIf="successMessageAppercu" class="alert alert-success mt-3">
+    {{ successMessageAppercu }}
+  </div>
+  <div *ngIf="errorMessageAppercu" class="alert alert-danger mt-3">
+    {{ errorMessageAppercu }}
+  </div>
+  
+
+ <!-- Formulaire pour Expertise Technique -->
+<div class="card shadow mb-5">
+    <div class="card-header bg-warning text-white">
+      <h5 class="mb-0">إضافة خبرة فنية جديدة</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="expertiseForm" (ngSubmit)="onSubmitExpertise()">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="bureauEtude" class="form-label">مكتب الدراسات</label>
+            <input type="text" id="bureauEtude" formControlName="bureauEtude" class="form-control" placeholder="Nom du bureau d'étude" >
+          </div>
+          <div class="col-md-6">
+            <label for="date" class="form-label">التاريخ</label>
+            <input type="date" id="date" formControlName="date" class="form-control" >
+          </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="recommandationExpertise" class="form-label">التوصيات</label>
+                <select id="recommandationExpertise" formControlName="recommandationExpertise" class="form-select" >
+                  <option *ngFor="let option of recommandationExpertiseOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
+              </div>              
+          <div class="col-md-6">
+            <label for="file" class="form-label">تحميل ملف الخبرة</label>
+            <input type="file" id="file" (change)="onFileSelectedExpertise($event)" class="form-control" >
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <!-- <button type="submit" [disabled]="!expertiseForm.valid || !file" class="btn btn-warning text-dark">-->
+            <button type="submit"  class="card-header bg-warning text-white">
+              إضافة
+          </button>
+        </div>
+      </form>
+  
+    <!-- Messages de succès et d'erreur pour Expertise -->
+<div *ngIf="successMessageExpertise" class="alert alert-success mt-3">
+    {{ successMessageExpertise }}
+  </div>
+  <div *ngIf="errorMessageExpertise" class="alert alert-danger mt-3">
+    {{ errorMessageExpertise }}
+  </div>
+  
+  <!-- Formulaire pour DecisionCollective -->
+  <div class="card shadow mb-5">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">إضافة قرار جماعي جديد</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="decisionForm" (ngSubmit)="onSubmitDecision()">
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="nbDec" class="form-label">عدد</label>
+            <input
+              type="number"
+              id="nbDec"
+              formControlName="nbDec"
+              class="form-control"
+              placeholder="Entrez le nombre de décisions"
+          
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="dateDec" class="form-label">التاريخ</label>
+            <input
+              type="date"
+              id="dateDec"
+              formControlName="dateDec"
+              class="form-control"
+             
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="recommandationDecision" class="form-label">التوصيات</label>
+            <select
+              id="recommandationDecision"
+              formControlName="recommandationDecision"
+              class="form-select"
+             
+            >
+              <option *ngFor="let option of recommandationDecisionOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+          
+
+        </div>
+        <div class="mb-3">
+            <label for="file" class="form-label">تحميل ملف القرار</label>
+            <input
+              type="file"
+              id="file"
+              (change)="onFileSelectedDecision($event)"
+              class="form-control"
+            />
+          </div>
+          
+        <div class="d-grid gap-2">
+          <button type="submit" class="card-header bg-info text-white">إضافة</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Messages de succès et d'erreur pour StatutActuel -->
+<div *ngIf="successMessageDecision" class="alert alert-success mt-3">
+    {{ successMessageDecision }}
+  </div>
+  <div *ngIf="errorMessageDecision" class="alert alert-danger mt-3">
+    {{ errorMessageDecision}}
+  </div>
+
+  <!-- Formulaire pour CommuniquerDecision -->
+  <div class="card shadow mb-5">
+    <div class="card-header bg-danger text-white">
+      <h5 class="mb-0">إضافة توصيل قرار جديد</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="communiquerDecisionForm" (ngSubmit)="onSubmitCommuniquerDecision()">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="nbDec" class="form-label">عدد</label>
+            <input
+              type="number"
+              id="nbDec"
+              formControlName="nbDec"
+              class="form-control"
+              placeholder="Entrez le nombre de décisions"
+           
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="dateDec" class="form-label">التاريخ</label>
+            <input
+              type="date"
+              id="dateDec"
+              formControlName="dateDec"
+              class="form-control"
+          
+            />
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="card-header bg-danger text-white">إضافة</button>
+        </div>
+      </form>
+  
+      <!-- Messages de succès et d'erreur -->
+      <div *ngIf="successMessageCommuniquer" class="alert alert-success mt-3">
+        {{ successMessageCommuniquer }}
+      </div>
+      <div *ngIf="errorMessageCommuniquer" class="alert alert-danger mt-3">
+        {{ errorMessageCommuniquer }}
+      </div>
+    </div>
+  </div>
+
+
+   <!-- Formulaire pour Etat -->
+<!-- Formulaire pour Etat d'Avancement -->
+<div class="card shadow mb-5">
+  <div class="card-header bg-warning text-white">
+    <h5 class="mb-0">إضافة مآل تنفيذ القرار الجماعي </h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="etatAvancementForm" (ngSubmit)="onSubmitEtatAvancement()">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nbCorrespondanceAL" class="form-label">عدد المراسلات</label>
+          <input
+            type="number"
+            id="nbCorrespondanceAL"
+            formControlName="nbCorrespondanceAL"
+            class="form-control"
+
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="dateCorrespondanceAL" class="form-label">تاريخ المراسلات</label>
+          <input
+            type="date"
+            id="dateCorrespondanceAL"
+            formControlName="dateCorrespondanceAL"
+            class="form-control"
+         
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nbReponseAL" class="form-label">عدد الردود</label>
+          <input
+            type="number"
+            id="nbReponseAL"
+            formControlName="nbReponseAL"
+            class="form-control"
+         
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="dateReponseAL" class="form-label">تاريخ الردود</label>
+          <input
+            type="date"
+            id="dateReponseAL"
+            formControlName="dateReponseAL"
+            class="form-control"
+         
+          />
+        </div>
+      </div>
+      <button type="submit" class="card-header bg-warning text-white">إضافة</button>
+    </form>
+  </div>
+</div>
+
+
+<!-- Messages de succès et d'erreur -->
+<div *ngIf="successMessageEtatAvancement" class="alert alert-success mt-3">
+  {{ successMessageEtatAvancement }}
+</div>
+<div *ngIf="errorMessageEtatAvancement" class="alert alert-danger mt-3">
+  {{ errorMessageEtatAvancement }}
+</div>
+
+  
+<!-- Formulaire pour InformerAR -->
+<div class="card shadow mb-5">
+  <div class="card-header bg-info text-white">
+    <h5 class="mb-0">إضافة إخبار وكيل الملك</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="informerArForm" (ngSubmit)="onSubmitInformerAr()">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nbAR" class="form-label">عدد</label>
+          <input
+            type="number"
+            id="nbAR"
+            formControlName="nbAR"
+            class="form-control"
+            placeholder="Entrez le nombre AR"
+          
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="dateAr" class="form-label">التاريخ</label>
+          <input
+            type="date"
+            id="dateAr"
+            formControlName="dateAr"
+            class="form-control"
+          
+          />
+        </div>
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="card-header bg-info text-white">إضافة</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Messages de succès et d'erreur pour InformerAR -->
+<div *ngIf="successMessageInformerAr" class="alert alert-success mt-3">
+  {{ successMessageInformerAr }}
+</div>
+<div *ngIf="errorMessageInformerAr" class="alert alert-danger mt-3">
+  {{ errorMessageInformerAr }}
+</div>
+
+ <!-- Formulaire pour Raison d'Inobservation -->
+<div class="card shadow mb-5">
+  <div class="card-header bg-light text-dark">
+    <h5 class="mb-0">إضافة أسباب عدم الإمتثال</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="raisonInobservationForm" (ngSubmit)="onSubmitRaisonInobservation()">
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <label for="nomRai" class="form-label">السبب</label>
+          <input type="text" id="nomRai" formControlName="nomRai" class="form-control"  />
+        </div>
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="card-header bg-light text-dark">إضافة</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="successMessageRaison" class="alert alert-success mt-3">
+  {{ successMessageRaison }}
+</div>
+<div *ngIf="errorMessageRaison" class="alert alert-danger mt-3">
+  {{ errorMessageRaison }}
+</div>
+
+  
+ <!-- Formulaire pour Relogement -->
+  <div class="card shadow mb-5">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">إضافة إعادة الإسكان</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="relogementForm" (ngSubmit)="onSubmitRelogement()">
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="NBFamilleExplusees" class="form-label">عدد الأسر التي تم إفراغها</label>
+            <input
+              type="number"
+              id="NBFamilleExplusees"
+              formControlName="NBFamilleExplusees"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="NBfamillePrestations" class="form-label">عدد الأسر في انتظار الاستفادة</label>
+            <input
+              type="number"
+              id="NBfamillePrestations"
+              formControlName="NBfamillePrestations"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="nomPrenomPrestations" class="form-label">الاسم العائلي والشخصي للأسر في انتظار الاستفادة</label>
+            <input
+              type="text"
+              id="nomPrenomPrestations"
+              formControlName="nomPrenomPrestations"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="NBfamilleBeneficiaire" class="form-label">عدد الأسر المستفيدة</label>
+            <input
+              type="number"
+              id="NBfamilleBeneficiaire"
+              formControlName="NBfamilleBeneficiaire"
+              class="form-control"
+
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="nomPrenomBeneficiaire" class="form-label">الاسم العائلي والشخصي للمستفيد</label>
+            <input
+              type="text"
+              id="nomPrenomBeneficiaire"
+              formControlName="nomPrenomBeneficiaire"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="dateTirageSort" class="form-label">تاريخ إجراء القرعة</label>
+            <input
+              type="date"
+              id="dateTirageSort"
+              formControlName="dateTirageSort"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="lieuPrestation" class="form-label">مكان الاستفادة</label>
+            <input
+              type="text"
+              id="lieuPrestation"
+              formControlName="lieuPrestation"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="relocalisation" class="form-label">إعادة التوطين</label>
+            <input
+              type="text"
+              id="relocalisation"
+              formControlName="relocalisation"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          
+          <div class="col-md-6">
+            <label for="societeSurveillance" class="form-label">الشركة المشرفة</label>
+            <select
+              id="societeSurveillance"
+              formControlName="societeSurveillance"
+              class="form-select"
+            >
+              <option *ngFor="let option of societeSurveillanceOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="fileRapportTirage" class="form-label">تحميل ملف إعادة الإسكان</label>
+              <input
+                type="file"
+                id="fileRapportTirage"
+                (change)="onFileSelectedRelogement($event)"
+                class="form-control"
+              />
+            </div>
+          </div>
+          
+        <div class="d-grid gap-2">
+          <button type="submit" class="card-header bg-secondary text-white">إضافة</button>
+        </div>
+      </form>
+  
+      <!-- Messages de succès et d'erreur -->
+      <div *ngIf="successMessageRelogement" class="alert alert-success mt-3">
+        {{ successMessageRelogement }}
+      </div>
+      <div *ngIf="errorMessageRelogement" class="alert alert-danger mt-3">
+        {{ errorMessageRelogement }}
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Formulaire pour StatutActuel -->
+  <div class="card shadow mb-5">
+      <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">إضافة الوضعية الراهنة للبناية</h5>
+      </div>
+      <div class="card-body">
+          <form [formGroup]="statutForm" (ngSubmit)="onSubmitStatut()">
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label for="vide" class="form-label">فارغة</label>
+                      <input type="text" id="vide" formControlName="vide" class="form-control" >
+                  </div>
+                  <div class="col-md-6">
+                      <label for="vacant" class="form-label">معتمرة</label>
+                      <input type="text" id="vacant" formControlName="vacant" class="form-control" >
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label for="entierementDemoli" class="form-label">هدمت كليا</label>
+                      <select id="entierementDemoli" formControlName="entierementDemoli" class="form-select" >
+                          <option *ngFor="let option of entierementDemoliOptions" [value]="option.value">{{ option.label }}</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="partiellementDemoli" class="form-label">هدمت جزئيا</label>
+                      <select id="partiellementDemoli" formControlName="partiellementDemoli" class="form-select" >
+                          <option *ngFor="let option of partiellementDemoliOptions" [value]="option.value">{{ option.label }}</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label for="renforce" class="form-label">تم تدعيمها</label>
+                      <input type="text" id="renforce" formControlName="renforce" class="form-control" >
+                  </div>
+                  <div class="col-md-6">
+                      <label for="restaurer" class="form-label">تم ترميمها</label>
+                      <input type="text" id="restaurer" formControlName="restaurer" class="form-control" >
+                  </div>
+              </div>
+              <div class="d-grid gap-2">
+                  <button type="submit" class="card-header bg-primary text-white">إضافة</button>
+              </div>
+          </form>
+      </div>
+  </div>
+
+<!-- Messages de succès et d'erreur pour StatutActuel -->
+<div *ngIf="successMessageStatut" class="alert alert-success mt-3">
+    {{ successMessageStatut }}
+  </div>
+  <div *ngIf="errorMessageStatut" class="alert alert-danger mt-3">
+    {{ errorMessageStatut }}
+  </div>
+  
+
+  <!-- Bouton de retour -->
+  <div class="d-grid gap-2">
+      <a [routerLink]="['/']" class="btn btn-secondary">العودة إلى صفحة الجدول</a>
+  </div>
+</div>
